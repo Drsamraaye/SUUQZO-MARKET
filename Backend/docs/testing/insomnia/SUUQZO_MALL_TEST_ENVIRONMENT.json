@@ -1,0 +1,52 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-24T00:00:00.000Z",
+  "resources": [
+    {
+      "_id": "env_suuqzo_local",
+      "_type": "environment",
+      "name": "SUUQZO MALL — Local Development",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "api_prefix": "/api/v1",
+        "access_token": "REPLACE_AFTER_LOGIN",
+        "refresh_token": "REPLACE_AFTER_LOGIN",
+        "test_user_id": "REPLACE_WITH_USER_ID",
+        "test_seller_id": "REPLACE_WITH_SELLER_PROFILE_ID",
+        "test_store_id": "REPLACE_WITH_STORE_ID",
+        "test_store_slug": "REPLACE_WITH_STORE_SLUG",
+        "test_product_id": "REPLACE_WITH_PRODUCT_ID",
+        "test_product_slug": "REPLACE_WITH_PRODUCT_SLUG",
+        "test_category_id": "REPLACE_WITH_CATEGORY_ID",
+        "test_brand_id": "REPLACE_WITH_BRAND_ID",
+        "test_inventory_id": "REPLACE_WITH_INVENTORY_ID",
+        "test_variant_id": "REPLACE_WITH_VARIANT_ID",
+        "test_seller_application_id": "REPLACE_WITH_APPLICATION_ID",
+        "test_kyc_doc_id": "REPLACE_WITH_KYC_DOC_ID",
+        "admin_access_token": "REPLACE_AFTER_ADMIN_LOGIN",
+        "super_admin_access_token": "REPLACE_AFTER_SUPER_ADMIN_LOGIN"
+      }
+    },
+    {
+      "_id": "env_suuqzo_production",
+      "_type": "environment",
+      "name": "SUUQZO MALL — Production",
+      "data": {
+        "base_url": "https://api.suuqzo.com",
+        "api_prefix": "/api/v1",
+        "access_token": "REPLACE_AFTER_LOGIN",
+        "refresh_token": "REPLACE_AFTER_LOGIN",
+        "test_user_id": "",
+        "test_store_id": "",
+        "test_product_id": "",
+        "test_category_id": "",
+        "test_brand_id": "",
+        "test_inventory_id": "",
+        "test_variant_id": "",
+        "test_seller_application_id": "",
+        "test_kyc_doc_id": ""
+      }
+    }
+  ]
+}

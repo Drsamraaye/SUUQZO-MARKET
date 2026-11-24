@@ -18,6 +18,9 @@ The SUUQZO MALL database is a multi-vendor marketplace data architecture designe
 - **Monetary Precision**: All currency amounts use PostgreSQL `DECIMAL(12, 2)` or `DECIMAL(14, 2)`. No floating-point data types are permitted.
 - **Seller Payouts**: Automated daily batch generation (`PayoutBatch` -> `SellerPayout`).
 - **Payment Collection**: Centralized at the parent `Order` level through local payment aggregators.
+- **Supabase Dual Connection Architecture**:
+  - `DIRECT_URL` (Port 5432 - Session Mode): Used by Prisma CLI (`prisma db push`, `prisma migrate`) to support prepared statements and DDL locking.
+  - `DATABASE_URL` (Port 6543 - Transaction Mode): Used for high-concurrency application runtime querying with connection pooling.
 - **Payment Rails Supported**:
   - `ZAAD` (Telesom)
   - `EVC_PLUS` (Hormuud)

@@ -1,0 +1,828 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-24T00:00:00.000Z",
+  "__export_source": "SUUQZO_MALL_AUDIT",
+  "resources": [
+    {
+      "_id": "wrk_suuqzo_mall",
+      "parentId": null,
+      "_type": "workspace",
+      "name": "SUUQZO MALL Backend API",
+      "description": "Complete SUUQZO MALL Backend API collection — Phases 02-05 (Auth, Users, Sellers, Stores, Products, Inventory)"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "api_prefix": "/api/v1",
+        "access_token": "",
+        "refresh_token": "",
+        "test_user_id": "",
+        "test_seller_id": "",
+        "test_store_id": "",
+        "test_store_slug": "",
+        "test_product_id": "",
+        "test_product_slug": "",
+        "test_category_id": "",
+        "test_brand_id": "",
+        "test_inventory_id": "",
+        "test_variant_id": "",
+        "test_seller_application_id": "",
+        "test_kyc_doc_id": ""
+      }
+    },
+    {
+      "_id": "fld_health",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "🏥 Health Check"
+    },
+    {
+      "_id": "req_health",
+      "parentId": "fld_health",
+      "_type": "request",
+      "name": "GET / — Health Check",
+      "url": "{{ base_url }}/",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "🔐 Auth"
+    },
+    {
+      "_id": "req_register",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/register",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/register",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"phone\": \"+252610000001\",\n  \"email\": \"testcustomer@suuqzo.test\",\n  \"password\": \"TestP@ss1!\",\n  \"role\": \"CUSTOMER\",\n  \"firstName\": \"Test\",\n  \"lastName\": \"Customer\"\n}"
+      }
+    },
+    {
+      "_id": "req_login",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/login",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/login",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"identifier\": \"+252610000001\",\n  \"password\": \"TestP@ss1!\"\n}"
+      }
+    },
+    {
+      "_id": "req_refresh",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/refresh",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/refresh",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refreshToken\": \"{{ refresh_token }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_me",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "GET /auth/me",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/me",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_logout",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/logout",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/logout",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refreshToken\": \"{{ refresh_token }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_logout_all",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/logout-all",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/logout-all",
+      "method": "POST",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_verify_phone",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/verify-phone",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/verify-phone",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"target\": \"+252610000001\",\n  \"code\": \"123456\"\n}"
+      }
+    },
+    {
+      "_id": "req_forgot_password",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/forgot-password",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/forgot-password",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"identifier\": \"+252610000001\"\n}"
+      }
+    },
+    {
+      "_id": "req_reset_password",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/reset-password",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/reset-password",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"token\": \"RESET_TOKEN_HERE\",\n  \"newPassword\": \"NewP@ss1!\"\n}"
+      }
+    },
+    {
+      "_id": "req_change_password",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/change-password",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/change-password",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"currentPassword\": \"TestP@ss1!\",\n  \"newPassword\": \"NewP@ss2!\"\n}"
+      }
+    },
+    {
+      "_id": "req_2fa_enroll",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/2fa/enroll",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/2fa/enroll",
+      "method": "POST",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_2fa_confirm",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/2fa/confirm",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/2fa/confirm",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"123456\"\n}"
+      }
+    },
+    {
+      "_id": "req_2fa_disable",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "POST /auth/2fa/disable",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/2fa/disable",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"password\": \"TestP@ss1!\"\n}"
+      }
+    },
+    {
+      "_id": "fld_users",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "👤 Users"
+    },
+    {
+      "_id": "req_list_users",
+      "parentId": "fld_users",
+      "_type": "request",
+      "name": "GET /users — List Users (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/users?page=1&limit=20",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_get_user",
+      "parentId": "fld_users",
+      "_type": "request",
+      "name": "GET /users/:id — Get User Profile",
+      "url": "{{ base_url }}{{ api_prefix }}/users/{{ test_user_id }}",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_update_user",
+      "parentId": "fld_users",
+      "_type": "request",
+      "name": "PATCH /users/:id — Update Profile",
+      "url": "{{ base_url }}{{ api_prefix }}/users/{{ test_user_id }}",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Name\"\n}"
+      }
+    },
+    {
+      "_id": "req_update_user_status",
+      "parentId": "fld_users",
+      "_type": "request",
+      "name": "PATCH /users/:id/status — Update Status (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/users/{{ test_user_id }}/status",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"SUSPENDED\",\n  \"reason\": \"Policy violation\"\n}"
+      }
+    },
+    {
+      "_id": "req_assign_role",
+      "parentId": "fld_users",
+      "_type": "request",
+      "name": "POST /users/:id/roles — Assign Role (SUPER_ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/users/{{ test_user_id }}/roles",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"role\": \"SELLER\",\n  \"action\": \"ASSIGN\"\n}"
+      }
+    },
+    {
+      "_id": "req_user_audit",
+      "parentId": "fld_users",
+      "_type": "request",
+      "name": "GET /users/:id/audit — Audit History",
+      "url": "{{ base_url }}{{ api_prefix }}/users/{{ test_user_id }}/audit",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "fld_sellers",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "🏷️ Sellers"
+    },
+    {
+      "_id": "req_seller_apply",
+      "parentId": "fld_sellers",
+      "_type": "request",
+      "name": "POST /sellers/apply",
+      "url": "{{ base_url }}{{ api_prefix }}/sellers/apply",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"businessName\": \"My Test Business\",\n  \"businessType\": \"RETAIL\",\n  \"description\": \"A test seller account\"\n}"
+      }
+    },
+    {
+      "_id": "req_seller_me",
+      "parentId": "fld_sellers",
+      "_type": "request",
+      "name": "GET /sellers/me",
+      "url": "{{ base_url }}{{ api_prefix }}/sellers/me",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_seller_kyc",
+      "parentId": "fld_sellers",
+      "_type": "request",
+      "name": "POST /sellers/kyc-documents",
+      "url": "{{ base_url }}{{ api_prefix }}/sellers/kyc-documents",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"documentType\": \"NATIONAL_ID\",\n  \"documentUrl\": \"https://storage.example.com/kyc/doc1.jpg\"\n}"
+      }
+    },
+    {
+      "_id": "req_seller_list_apps",
+      "parentId": "fld_sellers",
+      "_type": "request",
+      "name": "GET /sellers/applications (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/sellers/applications?page=1&limit=20",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_seller_review_app",
+      "parentId": "fld_sellers",
+      "_type": "request",
+      "name": "PATCH /sellers/applications/:id/review (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/sellers/applications/{{ test_seller_application_id }}/review",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"decision\": \"APPROVED\",\n  \"reviewNotes\": \"All documents verified\"\n}"
+      }
+    },
+    {
+      "_id": "fld_stores",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "🏪 Stores"
+    },
+    {
+      "_id": "req_stores_public",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores — Public Listing",
+      "url": "{{ base_url }}{{ api_prefix }}/stores?page=1&limit=20",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_stores_mine",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores/seller/my-stores",
+      "url": "{{ base_url }}{{ api_prefix }}/stores/seller/my-stores",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_stores_admin",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores/admin/all (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/stores/admin/all?page=1&limit=20",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_store_by_slug",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores/slug/:slug — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/stores/slug/{{ test_store_slug }}",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_store_by_id",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores/:id — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/stores/{{ test_store_id }}",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_store_create",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "POST /stores — Create Store (SELLER)",
+      "url": "{{ base_url }}{{ api_prefix }}/stores",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"My Test Store\",\n  \"description\": \"A test store for SUUQZO MALL\",\n  \"city\": \"Mogadishu\",\n  \"district\": \"Hodan\"\n}"
+      }
+    },
+    {
+      "_id": "req_store_update",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "PATCH /stores/:id — Update Store",
+      "url": "{{ base_url }}{{ api_prefix }}/stores/{{ test_store_id }}",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"description\": \"Updated store description\"\n}"
+      }
+    },
+    {
+      "_id": "req_store_admin_review",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "PATCH /stores/:id/admin-review (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/stores/{{ test_store_id }}/admin-review",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"ACTIVE\",\n  \"reviewNotes\": \"Store verified and approved\"\n}"
+      }
+    },
+    {
+      "_id": "fld_categories",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "📂 Categories"
+    },
+    {
+      "_id": "req_categories_public",
+      "parentId": "fld_categories",
+      "_type": "request",
+      "name": "GET /categories — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/categories",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_category_create",
+      "parentId": "fld_categories",
+      "_type": "request",
+      "name": "POST /categories (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/categories",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Electronics\",\n  \"description\": \"Electronic devices and accessories\",\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "_id": "req_category_update",
+      "parentId": "fld_categories",
+      "_type": "request",
+      "name": "PATCH /categories/:id (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/categories/{{ test_category_id }}",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"description\": \"Updated category description\"\n}"
+      }
+    },
+    {
+      "_id": "req_category_delete",
+      "parentId": "fld_categories",
+      "_type": "request",
+      "name": "DELETE /categories/:id (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/categories/{{ test_category_id }}",
+      "method": "DELETE",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "fld_brands",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "🏷 Brands"
+    },
+    {
+      "_id": "req_brands_list",
+      "parentId": "fld_brands",
+      "_type": "request",
+      "name": "GET /brands — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/brands",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_brand_create",
+      "parentId": "fld_brands",
+      "_type": "request",
+      "name": "POST /brands (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/brands",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Samsung\",\n  \"description\": \"Samsung Electronics\"\n}"
+      }
+    },
+    {
+      "_id": "fld_products",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "📦 Products"
+    },
+    {
+      "_id": "req_products_public",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "GET /products — Public Catalog",
+      "url": "{{ base_url }}{{ api_prefix }}/products?page=1&limit=20",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_products_admin",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "GET /products/admin/all (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/products/admin/all?page=1&limit=20",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_product_by_slug",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "GET /products/:storeSlug/:productSlug — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/products/{{ test_store_slug }}/{{ test_product_slug }}",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_product_by_id",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "GET /products/:id — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/products/{{ test_product_id }}",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_product_create",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "POST /products — Create Product (SELLER)",
+      "url": "{{ base_url }}{{ api_prefix }}/products",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"storeId\": \"{{ test_store_id }}\",\n  \"categoryId\": \"{{ test_category_id }}\",\n  \"name\": \"Test Product\",\n  \"description\": \"A test product for SUUQZO MALL\",\n  \"basePrice\": 29.99,\n  \"variants\": [\n    {\n      \"sku\": \"TEST-SKU-001\",\n      \"price\": 29.99,\n      \"initialStock\": 50,\n      \"attributes\": {\"color\": \"Black\", \"size\": \"M\"}\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_product_update",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "PATCH /products/:id — Update Product",
+      "url": "{{ base_url }}{{ api_prefix }}/products/{{ test_product_id }}",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"description\": \"Updated product description\"\n}"
+      }
+    },
+    {
+      "_id": "req_product_submit_review",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "POST /products/:id/submit-review",
+      "url": "{{ base_url }}{{ api_prefix }}/products/{{ test_product_id }}/submit-review",
+      "method": "POST",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_product_moderate",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "PATCH /products/:id/moderate (ADMIN)",
+      "url": "{{ base_url }}{{ api_prefix }}/products/{{ test_product_id }}/moderate",
+      "method": "PATCH",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"decision\": \"APPROVED\",\n  \"reviewNotes\": \"Product meets platform standards\"\n}"
+      }
+    },
+    {
+      "_id": "req_product_archive",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "DELETE /products/:id — Archive Product",
+      "url": "{{ base_url }}{{ api_prefix }}/products/{{ test_product_id }}",
+      "method": "DELETE",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "fld_inventory",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "📊 Inventory"
+    },
+    {
+      "_id": "req_inventory_availability",
+      "parentId": "fld_inventory",
+      "_type": "request",
+      "name": "GET /inventory/availability/:variantId/:storeId — Public",
+      "url": "{{ base_url }}{{ api_prefix }}/inventory/availability/{{ test_variant_id }}/{{ test_store_id }}",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_inventory_list",
+      "parentId": "fld_inventory",
+      "_type": "request",
+      "name": "GET /inventory — List Inventory",
+      "url": "{{ base_url }}{{ api_prefix }}/inventory?page=1&limit=20",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_inventory_movements",
+      "parentId": "fld_inventory",
+      "_type": "request",
+      "name": "GET /inventory/:id/movements",
+      "url": "{{ base_url }}{{ api_prefix }}/inventory/{{ test_inventory_id }}/movements",
+      "method": "GET",
+      "headers": [{"name": "Authorization", "value": "Bearer {{ access_token }}"}],
+      "body": {}
+    },
+    {
+      "_id": "req_inventory_adjust",
+      "parentId": "fld_inventory",
+      "_type": "request",
+      "name": "POST /inventory/adjust",
+      "url": "{{ base_url }}{{ api_prefix }}/inventory/adjust",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"variantId\": \"{{ test_variant_id }}\",\n  \"storeId\": \"{{ test_store_id }}\",\n  \"type\": \"RESTOCK\",\n  \"quantityDelta\": 50,\n  \"reason\": \"New shipment received\"\n}"
+      }
+    },
+    {
+      "_id": "fld_negative_tests",
+      "parentId": "wrk_suuqzo_mall",
+      "_type": "request_group",
+      "name": "⛔ Security & Negative Tests"
+    },
+    {
+      "_id": "req_neg_invalid_login",
+      "parentId": "fld_negative_tests",
+      "_type": "request",
+      "name": "POST /auth/login — Invalid Password (Expect 401)",
+      "url": "{{ base_url }}{{ api_prefix }}/auth/login",
+      "method": "POST",
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"identifier\": \"+252610000001\",\n  \"password\": \"WrongPassword123!\"\n}"
+      }
+    },
+    {
+      "_id": "req_neg_missing_token",
+      "parentId": "fld_negative_tests",
+      "_type": "request",
+      "name": "GET /users — Missing Token (Expect 401)",
+      "url": "{{ base_url }}{{ api_prefix }}/users",
+      "method": "GET",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_neg_role_escalation",
+      "parentId": "fld_negative_tests",
+      "_type": "request",
+      "name": "POST /users/:id/roles — Non-SuperAdmin Escalation (Expect 403)",
+      "url": "{{ base_url }}{{ api_prefix }}/users/{{ test_user_id }}/roles",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"role\": \"SUPER_ADMIN\",\n  \"action\": \"ASSIGN\"\n}"
+      }
+    },
+    {
+      "_id": "req_neg_non_admin_category",
+      "parentId": "fld_negative_tests",
+      "_type": "request",
+      "name": "POST /categories — Customer Create Category (Expect 403)",
+      "url": "{{ base_url }}{{ api_prefix }}/categories",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Hacked Category\"\n}"
+      }
+    },
+    {
+      "_id": "req_neg_negative_stock",
+      "parentId": "fld_negative_tests",
+      "_type": "request",
+      "name": "POST /inventory/adjust — Excessive Reduction (Expect 400)",
+      "url": "{{ base_url }}{{ api_prefix }}/inventory/adjust",
+      "method": "POST",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer {{ access_token }}"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"variantId\": \"{{ test_variant_id }}\",\n  \"storeId\": \"{{ test_store_id }}\",\n  \"type\": \"MANUAL_ADJUSTMENT\",\n  \"quantityDelta\": -999999,\n  \"reason\": \"Attempt negative inventory\"\n}"
+      }
+    }
+  ]
+}
